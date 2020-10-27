@@ -5,6 +5,7 @@ public class MiniMusicApp {
     public static void main(String[] args) {
         MiniMusicApp mini = new MiniMusicApp ();
         mini.play();
+
     }
 
     public void play() {
@@ -18,20 +19,20 @@ public class MiniMusicApp {
             Track track = seq.createTrack();
 
             ShortMessage a = new ShortMessage();
-            a.setMessage(144,1,44,100);
+            a.setMessage(144,1,42,100);
             MidiEvent noteOn = new MidiEvent(a,1);
             track.add(noteOn);
 
 
             ShortMessage b = new ShortMessage();
-            a.setMessage(128,1,44,100);
-            MidiEvent noteOff = new MidiEvent(b,16);
+            b.setMessage(144,1,35,127);
+            MidiEvent noteOff = new MidiEvent(b,4);
             track.add(noteOff);
 
             player.setSequence(seq);
 
             player.start();
-            Thread.sleep(10000);
+            Thread.sleep(5000);
             player.stop();
             player.close();
         }catch (Exception ex) {
