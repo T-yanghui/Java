@@ -1,11 +1,10 @@
 package market.page;
 
+import market.DAO.Good_DAO;
 import market.DAO.Stuff_DAO;
+import market.moudle.Good;
 import market.moudle.Stuff;
-import market.util.LoginCheck;
-import market.util.ScannerChoice;
-import market.util.Stuff_Display;
-import market.util.YesorNo;
+import market.util.*;
 
 import java.util.ArrayList;
 
@@ -47,6 +46,7 @@ public class SysControl {
                         break;
                     case 1:
                         //今日销售页面
+                        SysControl.sales_today();
                         break;
                     case 0:
                         System.out.println("退出系统...");
@@ -291,4 +291,35 @@ public class SysControl {
             else SysControl.stuffmanage();
         }while(true);
     }
+    //今日销售
+    public static void sales_today(){
+        ArrayList<Good> goods = new Good_DAO().all_sales();
+        Good_sale_Display.display(goods);
+        System.out.println("输入1，返回上级");
+        System.out.println("输入0，退出系统");
+        //选择
+        do{
+            String choice = scanner_string();
+            String reg = "[0-1]";
+            if(choice.matches(reg)){
+                int input = Integer.parseInt(choice);
+
+                switch(input){
+                    case 1:
+                        System.out.println("-------------------------");
+                        System.out.println("\t返回上级页面...");
+                        SysControl.page();
+                        break;
+                    case 0:
+                        System.out.println("退出系统...");
+                        System.exit(0);
+                    default:break;
+                }
+            }else {
+                System.err.println("输入有误！");
+                System.out.println("重新输入：");
+            }
+        }while (true);
+    }
 }
+
