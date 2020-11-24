@@ -1,0 +1,63 @@
+import com.sun.security.ntlm.Server;
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class  SimpleChatServer {
+    HashSet clientOutputStream;
+
+    public class ClientHander implements Runnable{
+        BufferedReader reader;
+        Socket sock;
+
+        public ClientHander(Socket clientSocket) {
+            try{
+                sock = clientSocket;
+                InputStreamReader isRead = new InputStreamReader(sock.getInputStream());
+                reader = new BufferedReader(isRead);
+            }catch (Exception ex) {ex.printStackTrace();}
+        }
+        public void run() {
+            String message;
+            try {
+                while((message = reader.readLine()) != null) {
+                    System.out.println("read "+message);
+                    tellEveryone(message);
+                }
+            }catch (Exception ex){ex.printStackTrace();}
+        }
+    }
+    public static void main(String[] args){
+        new SimpleChatServer().go();
+    }
+    public void go(){
+        clientOutputStream = new HashSet<PrintWriter>();
+
+        try{
+            ServerSocket serverSocket = new ServerSocket(5000);
+
+            while(true){
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
+                clientOutputStream.add(writer);
+
+                Thread t = new Thread(new ClientHander(clientSocket));
+                t.start();
+                System.out.println("got a connection");
+            }
+        }catch (Exception ex){ex.printStackTrace();}
+    }
+    public void tellEveryone(String message){
+        Iterator it = clientOutputStream.iterator();
+        while(it.hasNext()){
+            try{
+                PrintWriter writer = (PrintWriter) it.next();
+                writer.println(message);
+                writer.flush();
+            }catch (Exception ex){ex.printStackTrace();}
+        }
+    }
+}
+
+
