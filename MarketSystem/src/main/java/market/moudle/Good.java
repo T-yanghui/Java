@@ -25,6 +25,11 @@ public class Good {
         this.Gname = Gname;
         this.sales = sales;
     }
+    public Good(String Gname,double Gprice,double Gnum){
+        this.Gname = Gname;
+        this.price = price;
+        this.Gnum = Gnum;
+    }
 
 
     //get和set

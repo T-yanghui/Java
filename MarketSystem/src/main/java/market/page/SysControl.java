@@ -178,7 +178,7 @@ public class SysControl {
                 continue;
             }
             Stuff temp = stuffs.get(0);
-            System.out.printf("员工ID:%d   姓名:%s   权限：%s\n",temp.getID(),temp.getName(),temp.getPriority());
+            System.out.printf("员工ID:%010d   姓名:%s   权限：%s\n",temp.getID(),temp.getName(),temp.getPriority());
             System.out.println("是否修改y/n?");
             //修改权限校验
             int priority = temp.getPriority();

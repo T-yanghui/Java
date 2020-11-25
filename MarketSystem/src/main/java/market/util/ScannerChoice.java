@@ -11,6 +11,11 @@ public class ScannerChoice {
         return scanner.next();
     }
 
+    //获取输入double
+    public static double scanner_double(){
+        return Double.parseDouble(ScannerChoice.scanner_string());
+    }
+
     //获取输入的ID,正确返回ID,否则返回-1
     public static int scanner_int(){
         int num = 3;
