@@ -32,8 +32,7 @@ public class BeatBox {
         theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         BorderLayout layout = new BorderLayout();
         JPanel background = new JPanel(layout);
-
-        // yields a margin between edges of panel and the components
+        //yields a margin between edges of panel and the components
         background.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         checkBoxList = new ArrayList<JCheckBox>();
