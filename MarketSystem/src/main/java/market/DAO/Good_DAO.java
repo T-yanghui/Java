@@ -56,7 +56,7 @@ public class Good_DAO {
 
     }
     /*
-     * @Description //T删除商品
+     * @Description //删除商品
      * @Date 17:29 2020/11/25
      * @Param [good]
      * @return boolean
@@ -210,6 +210,51 @@ public class Good_DAO {
             DBClose.queryclose(ps,rs,conn);
         }
         return goods;
+    }
+    /*
+     * @Description //插入Goods_log销售信息
+     * @Date 0:08 2020/11/28
+     * @Param
+     * @return boolean
+     **/
+    public boolean insert_Goods_log_Goods(Good good,Stuff stuff,double num){
+        conn = new DBConnect().getConn(); //连接数据库
+        try{
+        //修改商品信息;
+            conn.setAutoCommit(false);
+            String sql_1 = " delete from Goods where GID = ?";
+            ps = conn.prepareStatement(sql_1);
+            ps.setInt(1,good.getGID());
+            ps.executeUpdate();
+            String sql_2 = "insert into Goods (GID,Gname,Gprice,Gnum)values(?,?,?,?)";
+            ps = conn.prepareStatement(sql_2);
+            ps.setInt(1,good.getGID());
+            ps.setString(2, good.getGname());
+            ps.setDouble(3, good.getPrice());
+            ps.setDouble(4, good.getGnum());
+            ps.executeUpdate();
+            //System.out.println(ps.toString());
+        //插入表Goods_log信息
+            java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+            String sql_3 = "insert into Goods_log (SID,GID,Gname,sale,date) value(?,?,?,?,?)";
+            ps = conn.prepareStatement(sql_3);
+            ps.setInt(1,stuff.getID());
+            ps.setInt(2,good.getGID());
+            ps.setString(3,good.getGname());
+            ps.setDouble(4,num);
+            ps.setDate(5,date);
+            ps.executeUpdate();
+            conn.commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            }catch (SQLException e1){e1.printStackTrace();}
+            return false;
+        }finally{
+            DBClose.addclose(ps,conn);
+        }
+        return true;
     }
 }
 

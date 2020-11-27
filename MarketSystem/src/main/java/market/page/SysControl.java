@@ -16,7 +16,7 @@ public class SysControl {
         System.out.println("--主页>>系统管理------------");
         //验证失败，退出系统
         if(login_flag == false) {
-            if (!LoginCheck.check(3)) {
+            if (LoginCheck.check(3) == null) {
                 System.out.println("账户验证失败...退出系统...");
                 System.exit(0);
             }

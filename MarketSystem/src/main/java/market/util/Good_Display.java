@@ -36,14 +36,15 @@ public class Good_Display {
         return false;
      }
 
-      public static boolean Good_ID(int id){
+      public static ArrayList<Good> Good_ID(int id){
         ArrayList<Good> goods = new Good_DAO().GID_query(id);
         if(!goods.isEmpty()){
             System.out.println("----------------商品列表---------------");
             for(Good good:goods)
                  System.out.printf("商品ID:%010d  商品名称：%s  商品价格：%.2f  商品数量%.0f\n", good.getGID(),good.getGname(),good.getPrice(),good.getGnum());
-            return true;
+            return goods;
         }
-        return false;
+        else System.out.println("查无此商品...");
+        return goods;
     }
 }

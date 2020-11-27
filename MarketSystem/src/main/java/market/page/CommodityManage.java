@@ -21,7 +21,7 @@ public class CommodityManage {
         System.out.println("--主页>>商品管理------------");
         //验证失败，退出系统
         if (login_flag == false) {
-            if (!LoginCheck.check(2)) {
+            if (LoginCheck.check(2) == null) {
                 System.out.println("账户验证失败...退出系统...");
                 System.exit(0);
             }
@@ -227,7 +227,7 @@ public class CommodityManage {
                             break Loop;
                         case 3:
                             System.out.println("输入商品ID:");
-                            if(!Good_Display.Good_ID(ScannerChoice.scanner_int())) {
+                            if(Good_Display.Good_ID(ScannerChoice.scanner_int()).isEmpty()) {
                                 System.out.println("无此商品...返回上级...");
                                 page();
                             }
