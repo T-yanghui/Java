@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/c3p0-config.xml</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>addUser</servlet-name>
+        <servlet-class>com.example.web1.addUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addUserController</servlet-name>
+        <servlet-class>com.example.web1.addUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getUsers</servlet-name>
+        <servlet-class>com.example.web1.getUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateUsers</servlet-name>
+        <servlet-class>com.example.web1.updateUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Servlet2</servlet-name>
+        <servlet-class>com.example.web1.Servlet2</servlet-class>
+    </servlet>
+
+<!--                   mapping                               -->
+    
+    <servlet-mapping>
+            <servlet-name>addUser</servlet-name>
+            <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addUserController</servlet-name>
+        <url-pattern>/addUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getUsers</servlet-name>
+        <url-pattern>/getUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateUsers</servlet-name>
+        <url-pattern>/updateUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Servlet2</servlet-name>
+        <url-pattern>/servlet2</url-pattern>
+    </servlet-mapping>
+
+<!--                过滤器               -->
+</web-app>
