@@ -24,8 +24,19 @@
     <!-- 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"></property>
-        <property name="suffix" value=".jsp"></property>
+        <property name="suffix" value=".html"></property>
     </bean>
+<!--	配置数据库-->
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource"></property>
+  </bean>
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <property name="driverClass" value = "com.mysql.jdbc.Driver" />
+    <property name="jdbcUrl" value = "jdbc:mysql://192.168.4.1:3306/netjs" />
+    <property name="user" value = "root" />
+    <property name="password" value = "$Bupt607545!" />
+    <property name="initialPoolSize" value = "5" />
+  </bean>
 <!--elfinder-->
 <!--    	<bean-->
 <!--		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />-->

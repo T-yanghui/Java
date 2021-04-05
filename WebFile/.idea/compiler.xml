@@ -13,4 +13,9 @@
       <module name="SpringMVC_template" target="1.7" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SpringMVC_template" options="-extdirs src/main/webapp/WEB-INF/lib" />
+    </option>
+  </component>
 </project>
