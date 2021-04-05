@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 配置扫描的包 -->
+    <context:component-scan base-package="top.*" />
+<!--	elfinder-->
+	<context:component-scan base-package="org.grapheco.elfinder.controller" />
+    <!-- 注册HandlerMapper、HandlerAdapter两个映射类 -->
+    <mvc:annotation-driven />
+
+    <!-- 访问静态资源 -->
+    <mvc:default-servlet-handler />
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+<!--elfinder-->
+<!--    	<bean-->
+<!--		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />-->
+
+	<!-- find appropriate command executor for given command -->
+	<bean id="commandExecutorFactory"
+		class="org.grapheco.elfinder.controller.executor.DefaultCommandExecutorFactory">
+		<property name="classNamePattern"
+			value="org.grapheco.elfinder.controller.executors.%sCommandExecutor" />
+		<property name="fallbackCommand">
+			<bean
+				class="org.grapheco.elfinder.controller.executors.MissingCommandExecutor" />
+		</property>
+		<property name="map">
+			<map>
+				<!--
+				<entry key="tree">
+					<bean class="cn.bluejoe.elfinder.controller.executors.TreeCommandExecutor" />
+				</entry>
+				-->
+			</map>
+		</property>
+	</bean>
+
+	<!-- FsService is often retrieved from HttpRequest -->
+	<!-- while a static FsService is defined here -->
+	<bean id="fsServiceFactory" class="org.grapheco.elfinder.impl.StaticFsServiceFactory">
+		<property name="fsService">
+			<bean class="org.grapheco.elfinder.impl.DefaultFsService">
+				<property name="serviceConfig">
+					<bean class="org.grapheco.elfinder.impl.DefaultFsServiceConfig">
+						<property name="tmbWidth" value="80" />
+					</bean>
+				</property>
+				<property name="volumeMap">
+					<!-- two volumes are mounted here -->
+					<map>
+						<entry key="A">
+							<bean class="org.grapheco.elfinder.localfs.LocalFsVolume">
+								<property name="name" value="MyFiles" />
+								<property name="rootDir" value="./tmp/a" />
+							</bean>
+						</entry>
+						<entry key="B">
+							<bean class="org.grapheco.elfinder.localfs.LocalFsVolume">
+								<property name="name" value="Shared" />
+								<property name="rootDir" value="./tmp/b" />
+							</bean>
+						</entry>
+					</map>
+				</property>
+				<!--
+				<property name="volumes">
+					<list>
+						<bean class="cn.bluejoe.elfinder.localfs.LocalFsVolume">
+							<property name="name" value="MyFiles" />
+							<property name="rootDir" value="/tmp/a" />
+						</bean>
+						<bean class="cn.bluejoe.elfinder.localfs.LocalFsVolume">
+							<property name="name" value="Shared" />
+							<property name="rootDir" value="/tmp/b" />
+						</bean>
+					</list>
+				</property>
+				-->
+				<property name="securityChecker">
+					<bean class="org.grapheco.elfinder.impl.FsSecurityCheckerChain">
+						<property name="filterMappings">
+							<list>
+								<bean class="org.grapheco.elfinder.impl.FsSecurityCheckFilterMapping">
+									<property name="pattern" value="A_.*" />
+									<property name="checker">
+										<bean class="org.grapheco.elfinder.impl.FsSecurityCheckForAll">
+											<property name="readable" value="true" />
+											<property name="writable" value="true" />
+										</bean>
+									</property>
+								</bean>
+								<bean class="org.grapheco.elfinder.impl.FsSecurityCheckFilterMapping">
+									<property name="pattern" value="B_.*" />
+									<property name="checker">
+										<bean class="org.grapheco.elfinder.impl.FsSecurityCheckForAll">
+											<property name="readable" value="true" />
+											<property name="writable" value="false" />
+										</bean>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>
