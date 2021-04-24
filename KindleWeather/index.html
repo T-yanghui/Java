@@ -3,10 +3,10 @@
 <head>
     <title>kindle</title>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="21600">
+    <!--  <meta http-equiv="refresh" content="7200"> -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&family=Titillium+Web&family=Zen+Dots&display=swap" rel="stylesheet">  
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&family=Titillium+Web&family=Zen+Dots&display=swap" rel="stylesheet">  
     <style>
         .time{
                 font-family: 'Zen Dots', cursive;font-size: 120px;
@@ -21,8 +21,6 @@
 		text-align: center;
 	}
     </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-<!--     和风天气插件 -->
     <script>
     WIDGET = {
     "CONFIG": {
@@ -36,85 +34,15 @@
     }
     </script>
     <script src="https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0"></script>
-
-<!--                 天气插件   end-->
-
-<!--         获取日期时间星期                -->
-    <script language=Javascript>
-        //时间
-    function time() {
-        //获取容器
-        t_div = document.getElementById('showtime');
-        //获取date
-        var now = new Date();
-        var utc8DiffMinutes = now.getTimezoneOffset() + 480;
-        now.setMinutes(now.getMinutes() + utc8DiffMinutes)
-        //div内容
-	    t_div.innerHTML = checkTime(now.getHours()) + ":" + checkTime(now.getMinutes())+"<br/>";
-        //等待一秒钟后调用time方法，由于settimeout在time方法内，所以可以无限调用
-        setTimeout(time, 1000);
-    }
-    //日期
-    function date(){
-        t_div = document.getElementById('showdate');
-        //获取date,kindle上时区不一样，少8个小时
-        var now = new Date();
-	    var utc8DiffMinutes = now.getTimezoneOffset() + 480
-    	now.setMinutes(now.getMinutes() + utc8DiffMinutes)
-        var week = getWeek(now);
-        //div内容
-        t_div.innerHTML= checkTime(now.getMonth()+1) + "/" +checkTime(now.getDate())+"    "+week;
-    }
-    //个位数,补零
-    function checkTime(i)
-    {
-        if (i<10)
-        {
-            i="0" + i;
-        }
-        return i;
-    }
-    //星期
-    function getWeek (now) {
-						var weekday = new Array(7)
-						weekday[0] = "SUN"
-						weekday[1] = "Mon"
-						weekday[2] = "Tues"
-						weekday[3] = "WED"
-						weekday[4] = "Thur"
-						weekday[5] = "Fri"
-						weekday[6] = "SAT"
-
-						return weekday[now.getDay()];
-					}
-	
-    //ajax请求扇贝每日一词API；后端nginx代理，解决跨域
-	function getreq(){
-         	  var apiurl = "/api/v2/quote/quotes/today/"
-          	 $.ajax({
-         	      type: "get",
-               	url: apiurl,
-               dataType: "",
-
-               success: function (d) {
-		       t_div = document.getElementById('todayEnglish');
-		       t_div.innerHTML="<br/>"+d.data.content+"<br/>"+d.data.translation; 
-                   },
-               error: function () {
-			t_div = document.getElementById('todayEnglish');
-		       t_div.innerHTML="<br/>"+"Lift is So beautiful"; 
-
-               }
-           });
-       }
-    </script>
+    　<script type="text/javascript" src="jquery.min.js"></script>
+    　<script type="text/javascript" src="kindleWeather.js"></script>
 </head>
 <!--页面加载时调用time()-->
 <body onload="time();date();getreq();">
     <div id = "showtime" class="time"></div>
     <div id = "showdate" class="date"></div>
-    <p id ="todayEnglish" class = "English">If I know what love is,it is because of you.<br/>因为你，我懂得了爱</p>
-    <div id="he-plugin-standard"  }
- ></div>
+    <p id ="todayEnglish" class = "English"></p>
+    <div id="he-plugin-standard" ></div>     
+    <img width="100%" height="100%" src="tree.jpg" style="position:absolute; left:0; top:0; z-index:-1;"/>
 </body>
 </html>
