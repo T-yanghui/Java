@@ -13,14 +13,8 @@ import top.service.UserService;
 public class DemoController {
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/")
     public String test(){
-        System.out.println("DemoController");
-        User user =new User();
-        user.setUsername("123");
-        user.setPhonenumber("123");
-        user.setPassword("123a");
-        userService.saveUser(user);
-        return "index";
+        return "login";
     }
 }
